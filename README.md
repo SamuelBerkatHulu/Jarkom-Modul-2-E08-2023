@@ -1,5 +1,5 @@
 # Jarkom-Modul-2-E08-2023
-Laporan Resmi Praktimum 1 JARKOM
+Laporan Resmi Praktimum 2 JARKOM
 
 **Anggota Kelompok ``E08``** 
 | No | Nama | NRP |
@@ -9,8 +9,9 @@ Laporan Resmi Praktimum 1 JARKOM
 
 ## Soal 1
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut 
-
 ## Penyelesaian Soal 1
+![07](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/f9815da9-e216-4719-8405-1df19401fbdf)
+
 
 ## Soal 2
 Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
