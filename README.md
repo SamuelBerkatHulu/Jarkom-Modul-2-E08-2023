@@ -9,8 +9,97 @@ Laporan Resmi Praktimum 2 JARKOM
 
 ## Soal 1
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut 
-## Penyelesaian Soal 1
 ![07](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/f9815da9-e216-4719-8405-1df19401fbdf)
+
+## Penyelesaian Soal 1
+```R
+Router 
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 192.210.1.1
+	netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+	address 192.210.2.1
+	netmask 255.255.255.0
+
+auto eth3
+iface eth3 inet static
+	address 192.210.3.1
+	netmask 255.255.255.0
+
+
+Switch 1
+NekulaClient 
+auto eth0
+iface eth0 inet static
+	address 192.210.1.2
+	netmask 255.255.255.0
+	gateway 192.210.1.1
+SadewaClient
+auto eth0
+iface eth0 inet static
+	address 192.210.1.3
+	netmask 255.255.255.0
+	gateway 192.210.1.1
+ArjunaLoadBalancer
+auto eth0
+iface eth0 inet static
+	address 192.210.1.4
+	netmask 255.255.255.0
+	gateway 192.210.1.1
+
+Switch 2
+WekudaraDNSSlave 
+auto eth0
+iface eth0 inet static
+	address 192.210.2.3
+	netmask 255.255.255.0
+	gateway 192.210.2.1
+YudhistiraDNSMaster
+auto eth0
+iface eth0 inet static
+	address 192.210.2.2
+	netmask 255.255.255.0
+	gateway 192.210.2.1
+Switch 3
+PrabukusumaWebServer
+auto eth0
+iface eth0 inet static
+	address 192.210.3.2
+	netmask 255.255.255.0
+	gateway 192.210.3.1
+AbimanyuWebServer
+auto eth0
+iface eth0 inet static
+	address 192.210.3.3
+	netmask 255.255.255.0
+	gateway 192.210.3.1
+WisanggeniWebServer
+auto eth0
+iface eth0 inet static
+	address 192.210.3.4
+	netmask 255.255.255.0
+	gateway 192.210.3.1
+
+
+Konfigurasi Script Shell Tiap Node : 
+Router : 
+nano awal.sh >> pada directori root
+#!/bin/bash
+#iptables distribusi jaringan
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 192.210.0.0/16
+#name server
+cat /etc/resolv.conf
+#update
+apt-get update
+Switch 1 : 
+
+```
 
 
 ## Soal 2
