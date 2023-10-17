@@ -848,6 +848,54 @@ cek koneksi `` lynx parikesit.abimanyu.e08.com`` pada NakulaClient.
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
 
 ## Penyelesaian Soal 14
+Tambahkan konfigurasi berikut untuk mengaktifkan directory listing pada folder /public dan mematikan directory listing pada folder /secret.
+
+```R
+          <Directory /var/www/parikesit.abimanyu.e08/public>
+          Options +Indexes
+  </Directory>
+
+  <Directory /var/www/parikesit.abimanyu.e08/secret>
+          Options -Indexes
+  </Directory>
+
+  Alias "/public" "/var/www/parikesit.abimanyu.e08/public"
+  Alias "/secret" "/var/www/parikesit.abimanyu.e08/secret"
+```
+
+konfigurasi ``/etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf`` seperti ini.      
+```R
+        #!/bin/bash
+
+mkdir -p /var/www/parikesit.abimanyu.e08.com
+/secret
+
+echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/parikesit.abimanyu.e08
+
+  ServerName parikesit.abimanyu.e08.com
+  ServerAlias www.parikesit.abimanyu.e08.com
+
+  <Directory /var/www/parikesit.abimanyu.e08/public>
+          Options +Indexes
+  </Directory>
+
+  <Directory /var/www/parikesit.abimanyu.e08/secret>
+          Options -Indexes
+  </Directory>
+
+  Alias "/public" "/var/www/parikesit.abimanyu.e08/public"
+  Alias "/secret" "/var/www/parikesit.abimanyu.e08/secret"
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf
+
+service apache2 restart
+```
+cek koneksi ``lynx parikesit.abimanyu.e12.com/public`` dan ``lynx parikesit.abimanyu.e12.com/secret`` pada NakulaClient.
 
 ## Soal 15
 Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
