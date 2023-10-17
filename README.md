@@ -748,3 +748,31 @@ service php7.0-fpm restart
 ```
 
 
+## Soal 10
+Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
+Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi 
+
+## Penyelesaian Soal 10
+
+Pertama buat dulu masuk ke ``cd /etc/apache2/sises-available`` kemduian cp file ``000-default.conf`` menjadi ``abimanyu.conf``
+denga cara ``cp 000-default.conf abimanyu.conf`` catata : saya berada di folder ``etc/apache2/sites-avilable``.
+
+kemudian buka file  ``nano abimanyu.conf`` dan edit seperti berikut :
+![konfigurasi Webserver dari Abimanyu](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/04715f1f-5ff6-4c12-97b3-902aa0e68b48)
+```R
+echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/abimanyu.e08.com
+
+  ServerName abimanyu.e08.com
+  ServerAlias www.abimanyu.e08.com
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/abimanyu.e12.com.conf
+
+service apache2 start
+a2ensite abimanyu.e12.com.conf
+service apache2 restart
+```
