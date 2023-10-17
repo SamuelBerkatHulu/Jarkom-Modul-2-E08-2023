@@ -382,7 +382,7 @@ zone "arjuna.e08.com" {
 zone "abimanyu.e08.com" {
     type slave;
     masters { 192.210.2.3; }; // IP Yudhis
-    file "/var/lib/bind/abimanyu.e12.com";
+    file "/var/lib/bind/abimanyu.e08.com";
 };
 
 zone "baratayuda.abimanyu.e08.com" {
@@ -873,7 +873,43 @@ mkdir -p /var/www/parikesit.abimanyu.e08.com
 echo '
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
-  DocumentRoot /var/www/parikesit.abimanyu.e08
+  DocumentRoot /var/www/parikesit.abimanyu.e08.com
+
+  ServerName parikesit.abimanyu.e08.com
+  ServerAlias www.parikesit.abimanyu.e08.com
+
+  <Directory /var/www/parikesit.abimanyu.e08/public>
+          Options +Indexes
+  </Directory>
+
+  <Directory /var/www/parikesit.abimanyu.e08/secr
+          Options -Indexes
+  </Directory>
+
+  Alias "/public" "/var/www/parikesit.abimanyu.e08/public"
+  Alias "/secret" "/var/www/parikesit.abimanyu.e08/secret"
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf
+
+service apache2 restart
+```
+cek koneksi ``lynx parikesit.abimanyu.e08.com/public`` dan ``lynx parikesit.abimanyu.e08.com/secret`` pada NakulaClient.
+
+## Soal 15
+Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
+
+## Penyelesaian Soal 15
+Tambahkan ``ErrorDocument 404 /error/404.html`` dan ``ErrorDocument 403 /error/403.html`` pada konfigurasi 
+``file /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf ``seperti dibawah ini.
+```R
+        #!/bin/bash
+
+echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/parikesit.abimanyu.e08.com
 
   ServerName parikesit.abimanyu.e08.com
   ServerAlias www.parikesit.abimanyu.e08.com
@@ -889,44 +925,224 @@ echo '
   Alias "/public" "/var/www/parikesit.abimanyu.e08/public"
   Alias "/secret" "/var/www/parikesit.abimanyu.e08/secret"
 
+  ErrorDocument 404 /error/404.html
+  ErrorDocument 403 /error/403.html
+
   ErrorLog ${APACHE_LOG_DIR}/error.log
   CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>' > /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf
 
 service apache2 restart
 ```
-cek koneksi ``lynx parikesit.abimanyu.e12.com/public`` dan ``lynx parikesit.abimanyu.e12.com/secret`` pada NakulaClient.
-
-## Soal 15
-Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
-
-## Penyelesaian Soal 15
-
+cek koneksi ``lynx parikesit.abimanyu.e08.com/testerror`` dan ``lynx parikesit.abimanyu.e08.com/secret`` pada NakulaClient.
 
 ## Soal 16
 Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi 
 www.parikesit.abimanyu.yyy.com/js 
 
 ## Penyelesaian Soal 16
+Tambahkan konfigurasi alias untuk direktori ``/js`` pada ``file /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf`` seperti berikut.
+```R
+        #!/bin/bash
 
+echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/parikesit.abimanyu.e08.com
+
+  ServerName parikesit.abimanyu.e08.com
+  ServerAlias www.parikesit.abimanyu.e08.com
+
+  <Directory /var/www/parikesit.abimanyu.e08/public>
+          Options +Indexes
+  </Directory>
+
+  <Directory /var/www/parikesit.abimanyu.e08/secret>
+          Options -Indexes
+  </Directory>
+
+  Alias "/public" "/var/www/parikesit.abimanyu.e08/public"
+  Alias "/secret" "/var/www/parikesit.abimanyu.e08/secret"
+  Alias "/js" "/var/www/parikesit.abimanyu.e08/public/js"
+
+  ErrorDocument 404 /error/404.html
+  ErrorDocument 403 /error/403.html
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf
+
+service apache2 restart
+```
+cek koneksi ``lynx parikesit.abimanyu.e08.com/js`` pada NakulaClient.
 
 ## Soal 17
 Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
 
 ## Penyelesaian Soal 17
+Konfigurasi ``file /etc/apache2/sites-available/rjp.baratayuda.abimanyu.e08.com.conf`` seperti ini.
+```R
+echo '
+<VirtualHost *:14000 *:14400>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/rjp.baratayuda.abimanyu.e08.com
 
+  ServerName rjp.baratayuda.abimanyu.e08.com
+  ServerAlias www.rjp.baratayuda.abimanyu.e08.com
+
+  ErrorDocument 404 /error/404.html
+  ErrorDocument 403 /error/403.html
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/rjp.baratayuda.abimanyu.e08.com.conf
+```
+dan tambahkan ``Listen 14000`` serta ``Listen 14400`` pada ``file /etc/apache2/ports.conf`` seperti berikut.
+```R
+echo '
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 80
+Listen 14000
+Listen 14400
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet' > /etc/apache2/ports.conf
+
+a2ensite rjp.baratayuda.abimanyu.e08.com.conf
+service apache2 restart
+```
+cek koneksi ``lynx rjp.baratayuda.abimanyu.e08.com:14000`` atau ``lynx rjp.baratayuda.abimanyu.e08.com:14400`` pada NakulaClient.
 
 ## Soal 18
 Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
 
 ## Penyelesaian Soal 18
+Ubah konfigurasi ``file /etc/apache2/sites-available/rjp.baratayuda.abimanyu.e08.com.conf`` seperti ini.
+```R
+#!/bin/bash
+
+echo '
+<VirtualHost *:14000 *:14400>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/rjp.baratayuda.abimanyu.e08.com
+
+  ServerName rjp.baratayuda.abimanyu.e08.com
+  ServerAlias www.rjp.baratayuda.abimanyu.e08.com
+
+  <Directory /var/www/rjp.baratayuda.abimanyu.e08>
+          AuthType Basic
+          AuthName "Restricted Content"
+          AuthUserFile /etc/apache2/.htpasswd
+          Require valid-user
+  </Directory>
+
+  ErrorDocument 404 /error/404.html
+  ErrorDocument 403 /error/403.html
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/rjp.baratayuda.abimanyu.e08.com.conf
+```
+Lalu panggil command htpasswd berikut untuk mengautentikasi username dan password.
+```R
+htpasswd -c -b /etc/apache2/.htpasswd Wayang baratayudae08
+```
+cek koneksi ``lynx rjp.baratayuda.abimanyu.e08.com:14000`` atau lynx ``rjp.baratayuda.abimanyu.e08.com:14400`` pada NakulaClient.
 
 ## Soal 19
 Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
 
 ## Penyelesaian Soal 19
+Ubah konfigurasi ``file /etc/apache2/sites-available/000-default.conf`` seperti ini.
+```R
+#!/bin/bash
+
+echo '
+<VirtualHost *:80>
+    ServerAdmin webmaster@abimanyu.e08.com
+    DocumentRoot /var/www/html
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    Redirect / http://www.abimanyu.e08.com/
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+
+service apache2 restart
+```
+cek koneksi ``lynx IP address Abimanyu (lynx 192.212.3.3)``. 
 
 ## Soal 20
 Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
 
 ## Penyelesaian Soal 20
+Jalankan comman ``a2enmod rewrite`` untuk mengaktifkan ``module rewrite.``
+
+Buat file ``.htaccess`` pada direktori ``/var/www/parikesit.abimanyu.e08/`` dan isi dengan konfigurasi ini.
+```R
+echo '
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/public/images/(.*)abimanyu(.*)
+RewriteCond %{REQUEST_URI} !/public/images/abimanyu.png
+RewriteRule abimanyu http://parikesit.abimanyu.e08.com/public/images/abimanyu.png$1 [L,R=301]' > /var/www/parikesit.abimanyu.e08/.htaccess
+```
+Kemudian tambahkan
+```R
+<Directory /var/www/parikesit.abimanyu.e08>
+        Options +FollowSymLinks -Multiviews
+        AllowOverride All
+</Directory>
+```
+pada file /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf seperti berikut.
+
+```R
+echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/parikesit.abimanyu.e08.com
+
+  ServerName parikesit.abimanyu.e08.com
+  ServerAlias www.parikesit.abimanyu.e08.com
+
+  <Directory /var/www/parikesit.abimanyu.e08/public>
+          Options +Indexes
+  </Directory>
+
+  <Directory /var/www/parikesit.abimanyu.e08/secret>
+          Options -Indexes
+  </Directory>
+
+  <Directory /var/www/parikesit.abimanyu.e08>
+          Options +FollowSymLinks -Multiviews
+          AllowOverride All
+  </Directory>
+
+  Alias "/public" "/var/www/parikesit.abimanyu.e08/public"
+  Alias "/secret" "/var/www/parikesit.abimanyu.e08/secret"
+  Alias "/js" "/var/www/parikesit.abimanyu.e08/public/js"
+
+  ErrorDocument 404 /error/404.html
+  ErrorDocument 403 /error/403.html
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf
+
+service apache2 restart
+```
+cek koneksi lakukan dengan command berikut.
+
+``lynx parikesit.abimanyu.e08.com/public/images/not-abimanyu.png``
+``lynx parikesit.abimanyu.e08.com/public/images/abimanyu-student.jpg``
+``lynx parikesit.abimanyu.e08.com/public/images/abimanyu.png``
+``lynx parikesit.abimanyu.e08.com/public/images/notabimanyujustmuseum.177013``
