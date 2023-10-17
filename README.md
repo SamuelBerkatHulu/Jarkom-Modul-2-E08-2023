@@ -18,7 +18,7 @@ Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjun
 ## Soal 2
 Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 
-## Penyelesaian Soal 2
+### Penyelesaian Soal 2
 ```R
 #------------------------------ Nomor 2 ------------------------------
 #Yudhistira <-------------!
@@ -61,11 +61,14 @@ service bind9 restart
 echo 'nameserver 192.210.2.3    # IP DNSMaster' >  /etc/resolv.conf
 ```
 
+### Hasil Soal 2
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/f0196465-0a4c-485a-8b5c-d04865614262)
+
 
 ## Soal 3
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
 
-## Penyelesaian Soal 3
+### Penyelesaian Soal 3
 ```R
 #------------------------------ Nomor 3 ------------------------------
 
@@ -99,11 +102,13 @@ www     IN      CNAME   abimanyu.e08.com.
 
 service bind9 restart
 ```
+### Hasil No 3
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/e7a13bd2-69e0-449f-9417-797fc22927ed)
 
 ## Soal 4
 Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
 
-## Penyelesaian Soal 4
+### Penyelesaian Soal 4
 ```R
 #------------------------------ Nomor 4 ------------------------------
 
@@ -132,11 +137,13 @@ parikesit IN    A       192.210.3.3     ; IP Abimanyu
 service bind9 restart
 ```
 
+### Hasil Soal 4
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/d4daf525-53d0-428a-9619-10b6b42142fa)
 
 ## Soal 5
 Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
 
-## Penyelesaian Soal 5
+### Penyelesaian Soal 5
 ```R
 #------------------------------ Nomor 5 ------------------------------
 
@@ -179,13 +186,14 @@ echo 'nameserver 192.210.2.3' > /etc/resolv.conf
 host -t PTR 192.210.3.3
 ```
 
+### Hasil Soal 5
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/fc827ee0-afaa-4c9d-aa2d-9d983544f8bc)
+
 ## Soal 6
 Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
 
-## Penyelesaian Soal 6
+### Penyelesaian Soal 6
 ```R
-#------------------------------ Nomor 6 ------------------------------
-
 #Yudhistira <-------------!
 #!/bin/bash
 
@@ -212,7 +220,7 @@ zone "2.210.192.in-addr.arpa" {
 
 service bind9 restart
 
-���
+
 #Werkudara <-------------!
 #!/bin/bash
 
@@ -236,8 +244,6 @@ zone "abimanyu.e08.com" {
 service bind9 restart
 
 
-
-���
 #Nakula <-------------!
 #!/bin/bash
 
@@ -247,10 +253,17 @@ nameserver 192.210.2.3  # IP Werkudara
 ' > /etc/resolv.conf
 ```
 
+Atur `service bind9` pada YudhistiraDNSMaster
+
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/533f1c67-4566-4d13-9876-4097ebc5d755)
+
+### Hasil Soal 6
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/6d2afae1-437e-4fdc-a3f3-8c4d5bed80cc)
+
 ## Soal 7
 Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 
-## Penyelesaian Soal 7
+### Penyelesaian Soal 7
 ```R
 #------------------------------ Nomor 7 ------------------------------
 #Yudhistira
@@ -326,8 +339,6 @@ zone "2.210.192.in-addr.arpa" {
 service bind9 restart
 
 
-
-���
 Werkudara
 #!/bin/bash
 
@@ -400,12 +411,13 @@ www     IN      CNAME   baratayuda.abimanyu.e08.com.' > /etc/bind/baratayuda/bar
 
 service bind9 restart
 ```
-
+### Hasil Soal 7
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/d11a0d62-a6bb-403e-9478-4a244129516a)
 
 ## Soal 8
 Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
 
-## Penyelesaian Soal 8
+### Penyelesaian Soal 8
 ```R
 #------------------------------ Nomor 8 ------------------------------
 
@@ -431,7 +443,8 @@ www.rjp IN      CNAME   rjp.baratayuda.abimanyu.e08.com.' > /etc/bind/baratayuda
 
 service bind9 restart
 ```
-
+### Hasil Soal 8
+![image](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/53292102/c5b618ba-65de-460d-a764-4cd7bcf8432c)
 
 ## Soal 9
 Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
@@ -747,45 +760,4 @@ service php7.0-fpm start
 service php7.0-fpm restart
 ```
 
-
-## Soal 11
-Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
-Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi 
-
-## Penyelesaian Soal 11
-
-Pertama buat dulu masuk ke ``cd /etc/apache2/sises-available`` kemudian cp file ``000-default.conf`` menjadi ``abimanyu.conf``
-denga cara ``cp 000-default.conf abimanyu.conf`` catata : saya berada di folder ``etc/apache2/sites-avilable``.
-
-kemudian buka file  ``nano abimanyu.conf`` dan edit seperti berikut :
-![konfigurasi Webserver dari Abimanyu](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/04715f1f-5ff6-4c12-97b3-902aa0e68b48)
-```R
-echo '
-<VirtualHost *:80>
-
-
-  ServerAdmin webmaster@localhost
-  DocumentRoot /var/www/abimanyu.e08.com
-  ServerName abimanyu.e08.com
-  ServerAlias www.abimanyu.e08.com
-
-  ErrorLog ${APACHE_LOG_DIR}/error.log
-  CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-
-</VirtualHost>' 
-
-service apache2 start
-a2ensite abimanyu.conf
-service apache2 restart
-```
-
-untuk melakukan chek koneksi masuk ke ``cd /var/www.abimanyu.e08.com`` dan buat file ``index.php`` 
-```R
-<?php
-        echo "Halo Salam Kenal";
-?>
-```
-dan pada clinet ``NekulaClient`` gunakan lynx untuk akses ``lynx abimanyu.e08.com/index.php`` 
-![cek webserver settignan awal](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/d57394e4-0f53-4fe0-9951-7c4397daa975)
 
