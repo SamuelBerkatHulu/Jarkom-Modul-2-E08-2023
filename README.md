@@ -760,4 +760,60 @@ service php7.0-fpm start
 service php7.0-fpm restart
 ```
 
+## Soal 11Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
+## Penyelesaian Soal 11
+Masuk ke ``etc/apache2/sites-available`` cp file ``000-default.conf`` menjadi ``abimanyu.08.com.conf``
+kemudian konfigurasi 
+![configutasi soal 11 webserver](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/4d879fc6-b4bc-483a-904b-7cf46081dd0f)
 
+```R
+        echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/abimanyu.e08.com
+
+  ServerName abimanyu.e08.com
+  ServerAlias www.abimanyu.e08.com
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' 
+
+service apache2 start
+a2ensite abimanyu.e12.com.conf
+service apache2 restart
+```
+buat folder baru pada ``mkdir /var/www/abimanyu.e08.com`` dan buat filer baru ``nano /var/www/abimanyu.e08.com/index.php``
+Pada NekulaClinet cek koneksi ``lynx abimanyu.e08.com/index.php``
+![soal 11 pengecekan php menggunakan nekula](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/f3dd3623-ef30-4213-806f-ebaf11760090)
+
+
+## Soal 12
+## Penyelesaian Soal 12
+
+## Soal 13
+## Penyelesaian Soal 13
+
+## Soal 14
+## Penyelesaian Soal 14
+
+## Soal 15
+## Penyelesaian Soal 15
+
+
+## Soal 16
+## Penyelesaian Soal 16
+
+
+## Soal 17
+## Penyelesaian Soal 17
+
+
+## Soal 18
+## Penyelesaian Soal 18
+
+## Soal 19
+## Penyelesaian Soal 19
+
+## Soal 20
+## Penyelesaian Soal 20
