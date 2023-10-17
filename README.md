@@ -780,7 +780,7 @@ kemudian konfigurasi
 </VirtualHost>' 
 
 service apache2 start
-a2ensite abimanyu.e12.com.conf
+a2ensite abimanyu.e08.com.conf
 service apache2 restart
 ```
 buat folder baru pada ``mkdir /var/www/abimanyu.e08.com`` dan buat filer baru ``nano /var/www/abimanyu.e08.com/index.php``
@@ -789,31 +789,96 @@ Pada NekulaClinet cek koneksi ``lynx abimanyu.e08.com/index.php``
 
 
 ## Soal 12
+Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
+
 ## Penyelesaian Soal 12
+lakukan konfigurasi pada ``nano/etc/apache2/sites-available/abimanyu.e08.com.conf``
+```R
+#!/bin/bash
+
+service apache2 start
+
+echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/abimanyu.e08.com
+
+  ServerName abimanyu.e08.com
+  ServerAlias www.abimanyu.e08.com
+
+  <Directory /var/www/abimanyu.e08/index.php/home>
+          Options +Indexes
+  </Directory>
+
+  Alias "/home" "/var/www/abimanyu.e08/index.php/home"
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/abimanyu.e08.com.conf
+
+service apache2 restart
+```
+cek koneksi ``lynx abimanyu.e08.com/home`` pada NakulaClient
 
 ## Soal 13
+Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
+
 ## Penyelesaian Soal 13
+ingar disini kita membuar file baru melakukan cp pada file ``000-default.conf`` menjadi ``parikesit.abimanyu.e08.com.conf``
+konfigurasi ``/etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf`` 
+```R
+        echo '
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/parikesit.abimanyu.e08.com
+
+  ServerName parikesit.abimanyu.e08.com
+  ServerAlias www.parikesit.abimanyu.e08.com
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>' > /etc/apache2/sites-available/parikesit.abimanyu.e08.com.conf
+
+a2ensite parikesit.abimanyu.e08.com.conf
+service apache2 restart
+```
+cek koneksi `` lynx parikesit.abimanyu.e08.com`` pada NakulaClient.
 
 ## Soal 14
+Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
+
 ## Penyelesaian Soal 14
 
 ## Soal 15
+Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
+
 ## Penyelesaian Soal 15
 
 
 ## Soal 16
+Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi 
+www.parikesit.abimanyu.yyy.com/js 
+
 ## Penyelesaian Soal 16
 
 
 ## Soal 17
+Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
+
 ## Penyelesaian Soal 17
 
 
 ## Soal 18
+Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
+
 ## Penyelesaian Soal 18
 
 ## Soal 19
+Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+
 ## Penyelesaian Soal 19
 
 ## Soal 20
+Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
+
 ## Penyelesaian Soal 20
