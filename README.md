@@ -762,17 +762,20 @@ kemudian buka file  ``nano abimanyu.conf`` dan edit seperti berikut :
 ```R
 echo '
 <VirtualHost *:80>
+
+
   ServerAdmin webmaster@localhost
   DocumentRoot /var/www/abimanyu.e08.com
-
   ServerName abimanyu.e08.com
   ServerAlias www.abimanyu.e08.com
 
   ErrorLog ${APACHE_LOG_DIR}/error.log
   CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>' > /etc/apache2/sites-available/abimanyu.e12.com.conf
+
+
+</VirtualHost>' 
 
 service apache2 start
-a2ensite abimanyu.e12.com.conf
+a2ensite abimanyu.conf
 service apache2 restart
 ```
