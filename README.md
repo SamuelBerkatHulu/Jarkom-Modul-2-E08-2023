@@ -779,3 +779,13 @@ service apache2 start
 a2ensite abimanyu.conf
 service apache2 restart
 ```
+
+untuk melakukan chek koneksi masuk ke ``cd /var/www.abimanyu.e08.com`` dan buat file ``index.php`` 
+```R
+<?php
+        echo "Halo Salam Kenal";
+?>
+```
+dan pada clinet ``NekulaClient`` gunakan lynx untuk akses ``lynx abimanyu.e08.com/index.php`` yang hasilnya seperti dibawah ini
+![cek webserver settignan awal](https://github.com/SamuelBerkatHulu/Jarkom-Modul-2-E08-2023/assets/100474007/d57394e4-0f53-4fe0-9951-7c4397daa975)
+
