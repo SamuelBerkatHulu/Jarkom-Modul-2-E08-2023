@@ -754,7 +754,7 @@ Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi
 
 ## Penyelesaian Soal 11
 
-Pertama buat dulu masuk ke ``cd /etc/apache2/sises-available`` kemduian cp file ``000-default.conf`` menjadi ``abimanyu.conf``
+Pertama buat dulu masuk ke ``cd /etc/apache2/sises-available`` kemudian cp file ``000-default.conf`` menjadi ``abimanyu.conf``
 denga cara ``cp 000-default.conf abimanyu.conf`` catata : saya berada di folder ``etc/apache2/sites-avilable``.
 
 kemudian buka file  ``nano abimanyu.conf`` dan edit seperti berikut :
