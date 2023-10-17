@@ -748,11 +748,11 @@ service php7.0-fpm restart
 ```
 
 
-## Soal 10
+## Soal 11
 Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
 Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi 
 
-## Penyelesaian Soal 10
+## Penyelesaian Soal 11
 
 Pertama buat dulu masuk ke ``cd /etc/apache2/sises-available`` kemduian cp file ``000-default.conf`` menjadi ``abimanyu.conf``
 denga cara ``cp 000-default.conf abimanyu.conf`` catata : saya berada di folder ``etc/apache2/sites-avilable``.
